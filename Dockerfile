@@ -102,6 +102,8 @@ RUN echo "root:root" | chpasswd
 #--------------------------------------------------------------------------
 #
 
+RUN mkidir /var/www/sites-available
+
 RUN usermod -u 1000 www-data
 
 WORKDIR /var/www
