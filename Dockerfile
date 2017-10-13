@@ -103,6 +103,7 @@ RUN echo "root:root" | chpasswd
 #
 
 RUN mkidir /var/www/sites-available
+RUN mkidir /var/www/logs
 
 RUN usermod -u 1000 www-data
 
