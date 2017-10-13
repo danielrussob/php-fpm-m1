@@ -110,7 +110,7 @@ RUN usermod -u 1000 www-data
 
 WORKDIR /var/www
 
-ENTRYPOINT service ssh restart && bash
+#ENTRYPOINT service ssh restart && bash
 CMD ["php-fpm"]
 
 EXPOSE 9000
