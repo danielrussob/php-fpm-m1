@@ -95,7 +95,8 @@ RUN curl -s http://getcomposer.org/installer | php && \
 
 RUN sed  -ibak -re "s/PermitRootLogin without-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
 RUN echo "root:root" | chpasswd
-	
+
+RUN systemctl enable ssh
 #
 #--------------------------------------------------------------------------
 # Final Touch
@@ -111,6 +112,7 @@ RUN usermod -u 1000 www-data
 WORKDIR /var/www
 
 #ENTRYPOINT service ssh restart && bash
-CMD ["php-fpm"]
+#CMD ["php-fpm"]
+CMD service ssh restart && php-fpm
 
 EXPOSE 9000
