@@ -114,5 +114,7 @@ WORKDIR /var/www
 #ENTRYPOINT service ssh restart && bash
 #CMD ["php-fpm"]
 CMD service ssh restart && php-fpm
+ADD init.sh /var/www/init.sh
+ADD set-magento.php /var/www/set-magento.php
 
 EXPOSE 9000
