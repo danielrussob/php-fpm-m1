@@ -22,13 +22,13 @@ $pass = $_GET['pass'];
 $pdo = new PDO('mysql:host='.$host.';dbname='.$db.'', $user, $pass);
 
 $unsecureBaseUrl = $_GET['web_unsecure_base_url'];
-$pdo->query("UPDATE core_confi_data SET value = '$unsecureBaseUrl' WHERE path LIKE 'web/unsecure/base_url'");
+$pdo->query("UPDATE core_config_data SET value = '$unsecureBaseUrl' WHERE path LIKE 'web/unsecure/base_url'");
 
 $secureBaseUrl = $_GET['web_secure_base_url'];
-$pdo->query("UPDATE core_confi_data SET value = '$secureBaseUrl' WHERE path LIKE 'web/secure/base_url'");
+$pdo->query("UPDATE core_config_data SET value = '$secureBaseUrl' WHERE path LIKE 'web/secure/base_url'");
 
 $cookieDomain = $_GET['web_cookie_cookie_domain'];
-$pdo->query("UPDATE core_confi_data SET value = '$cookieDomain' WHERE path LIKE 'web/cookie/cookie_domain'");
+$pdo->query("UPDATE core_config_data SET value = '$cookieDomain' WHERE path LIKE 'web/cookie/cookie_domain'");
 
 $pdo = null;
 
@@ -51,5 +51,8 @@ shell_exec("unzip media.zip");
 
 chdir("../");
 
-//shell_exec('php n98-magerun.phar cache:clean');
-//shell_exec('php n98-magerun.phar cache:flush');
+$magerun = file_get_contents("https://files.magerun.net/n98-magerun.phar");
+file_put_contents("n98-magerun.phar", $magerun);
+
+shell_exec('php n98-magerun.phar cache:clean');
+shell_exec('php n98-magerun.phar cache:flush');
