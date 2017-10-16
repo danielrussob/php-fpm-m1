@@ -39,16 +39,17 @@ chdir($webroot);
 $localXml = file_get_contents($_GET['localxml']);
 file_put_contents("app/etc/local.xml", $localXml);
 
-$media = file_get_contents($_GET['media']);
-file_put_contents("media.zip", $media);
-
 if (!file_exists("media")) {
     mkdir("media");
 }
 
 chdir("media");
 
+$media = file_get_contents($_GET['media']);
+file_put_contents("media.zip", $media);
 shell_exec("unzip media.zip");
 
-shell_exec('php n98-magerun.phar cache:clean');
-shell_exec('php n98-magerun.phar cache:flush');
+chdir("../");
+
+//shell_exec('php n98-magerun.phar cache:clean');
+//shell_exec('php n98-magerun.phar cache:flush');
