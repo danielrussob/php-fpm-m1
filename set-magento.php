@@ -65,7 +65,7 @@ if (isset($_GET['host'])
         if (isset($_GET['web_cookie_cookie_domain'])) {
             printDebug('Cambio web cookie domain');
             $cookieDomain = $_GET['web_cookie_cookie_domain'];
-            if ($pdo->query("UPDATE core_config_data SET value = '$cookieDomain' WHERE path LIKE 'web/cookie/cookie_domain'")) {
+            if ($pdo->query("UPDATE core_config_data SET value = NULL WHERE path LIKE 'web/cookie/cookie_domain'")) {
                 printDebug('Cookie domain cambiato in ' . $cookieDomain);
             } else {
                 printDebug('Cookie domain NON cambiato in ' . $cookieDomain);
