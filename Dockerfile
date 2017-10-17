@@ -116,5 +116,6 @@ WORKDIR /var/www
 CMD service ssh restart && php-fpm
 ADD init.sh /var/www/init.sh
 ADD set-magento.php /var/www/set-magento.php
+ADD magento.conf.tpl /var/www/magento.conf.tpl
 
 EXPOSE 9000
