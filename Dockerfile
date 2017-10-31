@@ -1,41 +1,4 @@
-FROM php:5.6.31-fpm
-
-# Installo "curl", "libmemcached-dev", "libpq-dev", "libjpeg-dev", "libpng12-dev", "libfreetype6-dev", "libssl-dev", "libmcrypt-dev",
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        curl \
-        libmemcached-dev \
-        libz-dev \
-        libpq-dev \
-        libjpeg-dev \
-        libpng12-dev \
-        libfreetype6-dev \
-        libssl-dev \
-        libmcrypt-dev \
-		libmcrypt4 \
-		libcurl3-dev \
-		libjpeg62-turbo 
-		
-# Installo PHP mcrypt
-RUN docker-php-ext-install mcrypt
-
-# Installo mbstring
-RUN docker-php-ext-install mbstring
-
-# Installo PHP pdo_mysql
-RUN docker-php-ext-install mysqli \
-    && docker-php-ext-install pdo_mysql
-	
-# Installo PHP pdo_pgsql
-RUN docker-php-ext-install pdo_pgsql		
-
-# Installo PHP gd
-RUN docker-php-ext-install gd && \
-    docker-php-ext-configure gd \
-        --enable-gd-native-ttf \
-        --with-jpeg-dir=/usr/lib \
-        --with-freetype-dir=/usr/include/freetype2 && \
-    docker-php-ext-install gd
+FROM dnafactory/php-fpm-56
 	
 # Installo SOAP
 RUN apt-get update -yqq && \
@@ -75,6 +38,12 @@ USER root
 RUN apt-get update -yqq && \
     apt-get install -y --force-yes jpegoptim optipng pngquant gifsicle
 
+#
+#--------------------------------------------------------------------------
+# Final Touch
+#--------------------------------------------------------------------------
+#
+
 # Installo tools
 RUN apt-get update && apt-get install -y \
     mysql-client \
@@ -87,7 +56,7 @@ RUN apt-get update && apt-get install -y \
 	openssh-server \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get purge -y --auto-remove
-	
+
 # Installo composer
 RUN curl -s http://getcomposer.org/installer | php && \
     echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
@@ -97,11 +66,6 @@ RUN sed  -ibak -re "s/PermitRootLogin without-password/PermitRootLogin yes/g" /e
 RUN echo "root:root" | chpasswd
 
 RUN systemctl enable ssh
-#
-#--------------------------------------------------------------------------
-# Final Touch
-#--------------------------------------------------------------------------
-#
 
 RUN mkdir /var/www/sites-available
 RUN mkdir /var/www/logs
